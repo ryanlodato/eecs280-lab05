@@ -94,6 +94,28 @@ std::istream & operator>>(std::istream &is, Pokemon &pokemon) {
 //            based on types, it wins.
 //          - Otherwise, the pokemon with the highest level wins (in
 //            case of a tie, pokemon a wins).
+
 bool Pokemon_battle(const Pokemon &a, const Pokemon &b) {
-  return false; // TODO: replace with your implementation
+  // Step 1: Check level difference
+  if(abs(a.get_level() - b.get_level()) >= 10){
+    return a.get_level() > b.get_level();
+  }
+
+  // Step 2: Check type effectiveness
+  if(a.get_type() != b.get_type()){
+    if(a.is_effective_against(b.get_type())){
+      return a.is_effective_against(b.get_type());
+    }
+    else if(b.is_effective_against(a.get_type())){
+      return b.is_effective_against(a.get_type());
+    }
+  }
+  
+  // Step: Compare levels
+  if (a.get_level() != b.get_level()) {
+    return a.get_level() > b.get_level();
+  }
+
+  // Step 4: If all else is equal, a wins by default
+  return true;
 }
